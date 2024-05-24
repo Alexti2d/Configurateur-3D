@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>ThreeJS Configurateur</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="style.css">
+	</head>
+
+	<body style='margin:0;'>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+        <div class="container mt-5">
+            <div class="row mx-auto">
+                <button id="BtnBlue" class="btn btn-light me-5 ms-5 col-2">Bleu</button>
+                <button id="BtnWhite" class="btn btn-light me-5 ms-5 col-2">Blanc</button>
+                <button id="BtnRed" class="btn btn-light me-5 ms-5 col-2">Rouge</button>
+                <button id="BtnGray" class="btn btn-light me-5 ms-5 col-2">Gris</button>
+            </div>
+        </div>
+
+		<script type="module" src="./main.js"></script>
+
+	</body>
+</html>
