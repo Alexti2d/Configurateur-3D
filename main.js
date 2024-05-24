@@ -4,7 +4,7 @@ import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RGBELoader } from "./node_modules/three/examples/jsm/loaders/RGBELoader.js";
-let camera, scene, renderer;
+let camera, scene, renderer, canvas;
 init();
 animate();
 
@@ -12,13 +12,15 @@ animate();
 
 
 function init() {
+	canvas = document.getElementById('renderer');
+
 
 	const rGBELoader = new RGBELoader()
 	const ChaiseMesh = new OBJLoader()
 	var mTLLoader = new MTLLoader()
 
-	const BtnRed = document.getElementById('BtnRed');
-	BtnRed.addEventListener('click', e => {MajChair("Orange")});
+	const BtnOrange = document.getElementById('BtnOrange');
+	BtnOrange.addEventListener('click', e => {MajChair("Orange")});
 
 	const BtnBlue = document.getElementById('BtnBlue');
 	BtnBlue.addEventListener('click', e => {MajChair("Blue")});
@@ -29,12 +31,13 @@ function init() {
 	const BtnGray = document.getElementById('BtnGray');
 	BtnGray.addEventListener('click', e => {MajChair("Gray")});
 	
-	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 20 );
+	camera = new THREE.PerspectiveCamera( 45, canvas.offsetWidth / canvas.offsetHeight, 0.1, 20 );
 	camera.position.z = 3.5;
+	camera.position.y = 5;
 
 	// scene
 	scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xa0a0a0);
+    scene.background = new THREE.Color(0xffffff);
     scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
     // const hemiLight = new THREE.HemisphereLight(0xffffff, 0x8d8d8d, 3);
     // hemiLight.position.set(0, 20, 0);
@@ -50,18 +53,21 @@ function init() {
 	scene.add( ambientLight );
 
 	const pointLight = new THREE.PointLight( 0xffffff, 15 );
+
 	camera.add( pointLight );
 	scene.add( camera );
 
-    const mesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(200, 200),
-        new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
-    );
+	// Si ont veut ajouter un sol
 
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.position.y = -0.5;
-    mesh.receiveShadow = true;
-    scene.add(mesh);
+    // const mesh = new THREE.Mesh(
+    //     new THREE.PlaneGeometry(200, 200),
+    //     new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false })
+    // );
+
+    // mesh.rotation.x = -Math.PI / 2;
+    // mesh.position.y = -0.5;
+    // mesh.receiveShadow = true;
+    // scene.add(mesh);
 
 	// model
 
@@ -72,37 +78,39 @@ function init() {
 		}
 	};
 
-	rGBELoader
-        .load("./plan.hdr", function (texture) {
+	
+
+	MajChair("Blue")
+	
+	function MajChair(couleur) {
+
+		rGBELoader
+        .load("obj/plan.hdr", function (texture) {
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = texture;
-			
-			
-			ChaiseMesh.load( 'chair.obj', function ( chaise ) {
+			ChaiseMesh.load( 'obj/chair.obj', function ( chaise ) {
 				chaise.scale.setScalar( 0.001 );
+				chaise.position.y = - 0.95;
 				chaise.castShadow = true;
 				chaise.receiveShadow = true;            
 				scene.add(chaise);
 			}, onProgress );
 		});
-
-	MajChair("Blue")
-	
-	function MajChair(couleur) {
     
-			new MTLLoader().load( 'chair' + couleur + '.mtl', function ( materials ) {
-				materials.preload();
-				ChaiseMesh.setMaterials( materials )
-			});
-			console.log(couleur)
+		mTLLoader.load( 'obj/chair' + couleur + '.mtl', function ( materials ) {
+			materials.preload();
+			ChaiseMesh.setMaterials( materials )
+		});
+		console.log(couleur)
 			
 	}
 
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.body.appendChild( renderer.domElement );
+	// renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
+	canvas.appendChild( renderer.domElement );
 
 	const controls = new  OrbitControls( camera, renderer.domElement );
 	controls.minDistance = 2;
@@ -112,9 +120,9 @@ function init() {
 }
 
 function onWindowResize() {
-	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
 	camera.updateProjectionMatrix();
-	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize( canvas.offsetWidth, canvas.offsetHeight );
 }
 
 function animate() {

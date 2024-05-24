@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 		<link type="text/css" rel="stylesheet" href="style.css">
+
 	</head>
 
 	<body style='margin:0;'>
@@ -20,13 +21,25 @@
 		</script>
 
         <div class="container mt-5">
-            <div class="row mx-auto">
-                <button id="BtnBlue" class="btn btn-light me-5 ms-5 col-2">Bleu</button>
-                <button id="BtnWhite" class="btn btn-light me-5 ms-5 col-2">Blanc</button>
-                <button id="BtnRed" class="btn btn-light me-5 ms-5 col-2">Rouge</button>
-                <button id="BtnGray" class="btn btn-light me-5 ms-5 col-2">Gris</button>
-            </div>
-        </div>
+			<div class="row">
+				<div class="col-4 product" id="renderer">
+				</div>
+				<div class="col-7 offset-1 desc">
+					<h1 class="pb-5">Chaise longue</h1>
+					<p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+					
+					<div class="container container-btn mt-5 p-3">
+					<div class="row row-btn mx-auto mt-5">
+						<p class="col-12">Coloris :</p>
+						<button id="BtnBlue" class="btn btn-primary me-1 ms-5 col-2 p-2 m-1">Bleu</button>
+						<button id="BtnWhite" class="btn btn-light me-1 ms-5 col-2 p-2 m-1">Blanc</button>
+						<button id="BtnOrange" class="btn btn-warning me-1 ms-5 col-2 p-2 m-1">Orange</button>
+						<button id="BtnGray" class="btn btn-secondary me-1 ms-5 col-2 p-2 m-1">Gris</button>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
 
 		<script type="module" src="./main.js"></script>
 

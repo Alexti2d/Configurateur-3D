@@ -1,5 +1,16 @@
+
 canvas {
-    position:fixed;
-    z-index: -1;
-    top: 0;
+    border-radius: 8px;
+}
+
+.product {
+    background-color: whitesmoke;
+    border-radius: 8px;
+    padding: 0;
+    box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.04);
+    height: 60vh;
+}
+
+.desc {
+    border-radius: 10px;
 }
